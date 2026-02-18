@@ -2,23 +2,21 @@ import json
 import logging
 import os
 import time
-from typing import List, Optional
 
 import motor.motor_asyncio
-from bson import ObjectId
 from fastapi import Body, FastAPI, HTTPException, status
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from fastapi_cache.decorator import cache
-from logmiddleware import RouterLoggingMiddleware, logging_config
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from logmiddleware import RouterLoggingMiddleware, logging_config # type: ignore
+from pydantic import BaseModel, Field
 from pydantic.functional_validators import BeforeValidator
 from pymongo import errors
-from redis import asyncio as aioredis
+from redis import asyncio as aioredis # type: ignore
 from typing_extensions import Annotated
 
 # Configure JSON logging
-logging.config.dictConfig(logging_config)
+logging.config.dictConfig(logging_config) # type: ignore
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
@@ -45,7 +43,7 @@ else:
     cache = nocache
 
 
-client = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URL)
+client = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URL) # type: ignore
 db = client[DATABASE_NAME]
 
 # Represents an ObjectId field in the database.
@@ -65,7 +63,7 @@ class UserModel(BaseModel):
     Container for a single user record.
     """
 
-    id: Optional[PyObjectId] = Field(alias="_id", default=None)
+    id: PyObjectId | None = Field(alias="_id", default=None)
     age: int = Field(...)
     name: str = Field(...)
 
@@ -75,7 +73,7 @@ class UserCollection(BaseModel):
     A container holding a list of `UserModel` instances.
     """
 
-    users: List[UserModel]
+    users: list[UserModel]
 
 
 @app.get("/")
@@ -141,7 +139,7 @@ async def collection_count(collection_name: str):
     response_model=UserCollection,
     response_model_by_alias=False,
 )
-@cache(expire=60 * 1)
+@cache(expire=60 * 1) # type: ignore
 async def list_users(collection_name: str):
     """
     List all of the user data in the database.
@@ -185,7 +183,7 @@ async def create_user(collection_name: str, user: UserModel = Body(...)):
     """
     collection = db.get_collection(collection_name)
     new_user = await collection.insert_one(
-        user.model_dump(by_alias=True, exclude=["id"])
+        user.model_dump(by_alias=True, exclude=["id"]) # type: ignore
     )
     created_user = await collection.find_one({"_id": new_user.inserted_id})
     return created_user
