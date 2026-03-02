@@ -8,10 +8,16 @@
 docker compose up -d
 ```
 
-Инициализация кластера mongodb
+Инициализация шардов кластера mongodb
 
 ```shell
 ./scripts/mongo-init.sh
+```
+
+Инициализация реплик кластера mongodb
+
+```shell
+./scripts/mongo-init-replicas.sh
 ```
 
 

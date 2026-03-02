@@ -1,4 +1,4 @@
-name: mongo-sharding
+name: mongo-sharding-repl
 
 services:
   mongoConfigSrv:
@@ -51,6 +51,56 @@ services:
       interval: 5s
       start_period: 10s
 
+  mongoShard1Replica1:
+    image: mongo:latest
+    container_name: mongoShard1Replica1
+    restart: always
+    ports:
+      - "27021:27021"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.6
+    volumes:
+      - shard1-replica1-data:/data/db
+    command:
+      [
+        "--shardsvr",
+        "--replSet",
+        "mongoShard1",
+        "--bind_ip_all",
+        "--port",
+        "27021"
+      ]
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
+  mongoShard1Replica2:
+    image: mongo:latest
+    container_name: mongoShard1Replica2
+    restart: always
+    ports:
+      - "27022:27022"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.5
+    volumes:
+      - shard1-replica2-data:/data/db
+    command:
+      [
+        "--shardsvr",
+        "--replSet",
+        "mongoShard1",
+        "--bind_ip_all",
+        "--port",
+        "27022"
+      ]
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
   mongoShard2:
     image: mongo:latest
     container_name: mongoShard2
@@ -75,7 +125,107 @@ services:
       test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
-  
+
+  mongoShard2Replica1:
+    image: mongo:latest
+    container_name: mongoShard2Replica1
+    restart: always
+    ports:
+      - "27023:27023"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.4
+    volumes:
+      - shard2-replica1-data:/data/db
+    command:
+      [
+        "--shardsvr",
+        "--replSet",
+        "mongoShard2",
+        "--bind_ip_all",
+        "--port",
+        "27023"
+      ]
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
+  mongoShard2Replica2:
+    image: mongo:latest
+    container_name: mongoShard2Replica2
+    restart: always
+    ports:
+      - "27024:27024"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.3
+    volumes:
+      - shard2-replica2-data:/data/db
+    command:
+      [
+        "--shardsvr",
+        "--replSet",
+        "mongoShard2",
+        "--bind_ip_all",
+        "--port",
+        "27024"
+      ]
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
+  mongoConfigSrvReplica1:
+    image: mongo:latest
+    container_name: mongoConfigSrvReplica1
+    restart: always
+    ports:
+      - "27025:27025"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.2
+    volumes:
+      - config-replica1-data:/data/db
+    command:
+      [
+        "--configsvr",
+        "--replSet",
+        "config_server",
+        "--bind_ip_all",
+        "--port",
+        "27025"
+      ]
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
+  mongoConfigSrvReplica2:
+    image: mongo:latest
+    container_name: mongoConfigSrvReplica2
+    restart: always
+    ports:
+      - "27026:27026"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.1
+    volumes:
+      - config-replica2-data:/data/db
+    command:
+      [
+        "--configsvr",
+        "--replSet",
+        "config_server",
+        "--bind_ip_all",
+        "--port",
+        "27026"
+      ]
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+    
   mongodb1:
     image: mongo:latest
     container_name: mongodb1
@@ -126,4 +276,10 @@ networks:
 volumes:
   config-data:
   shard1-data:
+  shard1-replica1-data:
+  shard1-replica2-data:
   shard2-data:
+  shard2-replica1-data:
+  shard2-replica2-data:
+  config-replica1-data:
+  config-replica2-data:
