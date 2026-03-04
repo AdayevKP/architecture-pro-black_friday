@@ -14,6 +14,11 @@ docker compose up -d
 ./scripts/mongo-init.sh
 ```
 
+Заполнение данных в mongodb
+
+```shell
+./scripts/mongo-fill-data.sh
+```
 
 Показать количество записей на шардах
 

@@ -10,8 +10,9 @@ rs.initiate(
     ]
   }
 );
-> exit(); 
 EOF
+
+sleep 1
 
 docker compose exec -T mongoShard1 mongosh --port 27018 <<EOF
 rs.initiate(
@@ -24,6 +25,8 @@ rs.initiate(
 );
 EOF
 
+sleep 1
+
 docker compose exec -T mongoShard2 mongosh --port 27019 <<EOF
 rs.initiate(
     {
@@ -35,13 +38,12 @@ rs.initiate(
   );
 EOF
 
+sleep 1
+
 docker compose exec -T mongodb1 mongosh --port 27020 <<EOF
 sh.addShard( "mongoShard1/mongoShard1:27018");
 sh.addShard( "mongoShard2/mongoShard2:27019");
 
 sh.enableSharding("somedb");
 sh.shardCollection("somedb.helloDoc", { "name" : "hashed" } )
-
-use somedb
-for(var i = 0; i < 1000; i++) db.helloDoc.insertOne({age:i, name:"ly"+i})
 EOF

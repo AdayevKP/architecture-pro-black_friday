@@ -80,6 +80,10 @@ services:
     image: mongo:latest
     container_name: mongodb1
     restart: always
+    depends_on:
+      - mongoShard2
+      - mongoShard1
+      - mongoConfigSrv
     ports:
       - "27020:27020"
     networks:
