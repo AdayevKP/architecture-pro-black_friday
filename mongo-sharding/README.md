@@ -14,6 +14,10 @@ docker compose up -d
 ./scripts/mongo-init.sh
 ```
 
+Если запуск скрипта выдает ошибку 
+```MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27020```
+то надо подождать 30 секунд и запустить снова
+
 Заполнение данных в mongodb
 
 ```shell
@@ -23,5 +27,5 @@ docker compose up -d
 Показать количество записей на шардах
 
 ```shell
-./scripts/mongo-shards-data.sh
+../scripts/mongo-shards-data.sh
 ```
