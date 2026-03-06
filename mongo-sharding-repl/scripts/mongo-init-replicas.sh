@@ -40,3 +40,11 @@ rs.initiate(
     }
 );
 EOF
+
+docker compose exec -T mongodb1 mongosh --port 27020 <<EOF
+sh.addShard("mongoShard1/mongoShard1:27018,mongoShard1Replica1:27021,mongoShard1Replica2:27022");
+sh.addShard("mongoShard2/mongoShard2:27019,mongoShard2Replica1:27023,mongoShard2Replica2:27024");
+
+sh.enableSharding("somedb");
+sh.shardCollection("somedb.helloDoc", { "name" : "hashed" } )
+EOF

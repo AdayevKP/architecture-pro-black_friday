@@ -8,8 +8,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.10
+      - app-network
     volumes:
       - config-data:/data/db
     command:
@@ -33,8 +32,7 @@ services:
     ports:
       - "27018:27018"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.9
+      - app-network
     volumes:
       - shard1-data:/data/db
     command:
@@ -58,8 +56,7 @@ services:
     ports:
       - "27021:27021"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.6
+      - app-network
     volumes:
       - shard1-replica1-data:/data/db
     command:
@@ -83,8 +80,7 @@ services:
     ports:
       - "27022:27022"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.5
+      - app-network
     volumes:
       - shard1-replica2-data:/data/db
     command:
@@ -108,8 +104,7 @@ services:
     ports:
       - "27019:27019"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.8
+      - app-network
     volumes:
       - shard2-data:/data/db
     command:
@@ -133,8 +128,7 @@ services:
     ports:
       - "27023:27023"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.4
+      - app-network
     volumes:
       - shard2-replica1-data:/data/db
     command:
@@ -158,8 +152,7 @@ services:
     ports:
       - "27024:27024"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.3
+      - app-network
     volumes:
       - shard2-replica2-data:/data/db
     command:
@@ -183,8 +176,7 @@ services:
     ports:
       - "27025:27025"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.2
+      - app-network
     volumes:
       - config-replica1-data:/data/db
     command:
@@ -208,8 +200,7 @@ services:
     ports:
       - "27026:27026"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.1
+      - app-network
     volumes:
       - config-replica2-data:/data/db
     command:
@@ -233,13 +224,13 @@ services:
     ports:
       - "27020:27020"
     networks:
-      app-network:
-        ipv4_address: 173.17.0.7
+      - app-network
     command:
       [
         "mongos", # обычная mongo в режиме роутера
         "--configdb", 
-        "config_server/mongoConfigSrv:27017", # передача данных сервера конфигурации
+        # передача данных сервера конфигурации
+        "config_server/mongoConfigSrv:27017,mongoConfigSrvReplica1:27025,mongoConfigSrvReplica2:27026",
         "--bind_ip_all",
         "--port",
         "27020"
