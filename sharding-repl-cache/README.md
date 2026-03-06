@@ -8,21 +8,24 @@
 docker compose up -d
 ```
 
-Инициализация шардов кластера mongodb
+Инициализация кластера mongodb c репликами
 
 ```shell
-./scripts/mongo-init.sh
+../scripts/mongo-init-replicas.sh
 ```
 
-Инициализация реплик кластера mongodb
+Если запуск скрипта выдает ошибку 
+```MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27020```
+то надо подождать 30 секунд и запустить снова
+
+Заполнение данных в mongodb
 
 ```shell
-./scripts/mongo-init-replicas.sh
+../scripts/mongo-init.sh
 ```
-
 
 Показать количество записей на шардах
 
 ```shell
-./scripts/mongo-shards-data.sh
+../scripts/mongo-shards-data.sh
 ```

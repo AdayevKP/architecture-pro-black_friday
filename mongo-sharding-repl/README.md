@@ -11,7 +11,7 @@ docker compose up -d
 Инициализация кластера mongodb c репликами
 
 ```shell
-./scripts/mongo-init-replicas.sh
+../scripts/mongo-init-replicas.sh
 ```
 
 Если запуск скрипта выдает ошибку 
@@ -21,11 +21,11 @@ docker compose up -d
 Заполнение данных в mongodb
 
 ```shell
-./scripts/mongo-fill-data.sh
+../scripts/mongo-init.sh
 ```
 
 Показать количество записей на шардах
 
 ```shell
-./scripts/mongo-shards-data.sh
+../scripts/mongo-shards-data.sh
 ```

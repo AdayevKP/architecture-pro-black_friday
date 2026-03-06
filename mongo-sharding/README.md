@@ -11,7 +11,7 @@ docker compose up -d
 Инициализация кластера mongodb
 
 ```shell
-./scripts/mongo-init.sh
+./scripts/mongo-init-shards.sh
 ```
 
 Если запуск скрипта выдает ошибку 
@@ -21,7 +21,7 @@ docker compose up -d
 Заполнение данных в mongodb
 
 ```shell
-./scripts/mongo-fill-data.sh
+../scripts/mongo-init.sh
 ```
 
 Показать количество записей на шардах
