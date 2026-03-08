@@ -1,0 +1,72 @@
+{
+  "$jsonSchema": {
+    "type": "object",
+    "required": ["_id", "user_id", "created_at", "items", "status", "total_amount", "geo_zone"],
+    "properties": {
+      "_id": {
+        "type": "objectId",
+        "description": "Уникальный идентификатор заказа"
+      },
+      "user_id": {
+        "type": "objectId",
+        "description": "Идентификатор клиента"
+      },
+      "created_at": {
+        "type": "date",
+        "description": "Дата и время оформления заказа"
+      },
+      "items": {
+        "type": "array",
+        "description": "Список заказанных товаров",
+        "items": {
+          "type": "object",
+          "required": ["product_id", "quantity", "price"],
+          "properties": {
+            "product_id": {
+              "type": "objectId",
+              "description": "Идентификатор товара"
+            },
+            "quantity": {
+              "type": "int",
+              "minimum": 1,
+              "description": "Количество товара"
+            },
+            "price": {
+              "type": "decimal",
+              "description": "Цена за единицу на момент заказа"
+            },
+            "subtotal": {
+              "type": "decimal",
+              "description": "Сумма по позиции (quantity * price)"
+            }
+          }
+        }
+      },
+      "status": {
+        "type": "string",
+        "description": "Статус заказа",
+        "enum": ["pending", "processing", "shipped", "delivered", "cancelled"]
+      },
+      "total_amount": {
+        "type": "decimal",
+        "description": "Общая сумма заказа"
+      },
+      "geo_zone": {
+        "type": "string",
+        "description": "Геозона заказа (например, Москва, Екатеринбург)"
+      },
+      "updated_at": {
+        "type": "date",
+        "description": "Дата последнего обновления статуса"
+      },
+      "delivery_address": {
+        "type": "string",
+        "description": "Адрес доставки (опционально)"
+      },
+      "contact_phone": {
+        "type": "string",
+        "description": "Контактный телефон"
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$jsonSchema": {
+    "type": "object",
+    "required": ["_id", "name", "category", "price", "stock_by_zone"],
+    "properties": {
+      "_id": {
+        "type": "objectId",
+        "description": "Уникальный идентификатор товара"
+      },
+      "name": {
+        "type": "string",
+        "description": "Наименование товара",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "category": {
+        "type": "string",
+        "description": "Категория товара",
+        "enum": ["Электроника", "Книги", "Одежда", "Бытовая техника", "Мебель", "Спорт", "Другое"]
+      },
+      "price": {
+        "type": "decimal",
+        "description": "Цена товара"
+      },
+      "quantity_by_zone": {
+        "type": "object",
+        "description": "Остаток товара в каждой геозоне, ключ - название зоны, значение - количество остатка",
+        "additionalProperties": {
+          "type": "int",
+          "minimum": 0,
+          "description": "Количество доступных единиц"
+        }
+      },
+      "attributes": {
+        "type": "object",
+        "description": "Дополнительные атрибуты (цвет, размер и т.д.)",
+        "additionalProperties": true
+      },
+      "created_at": {
+        "type": "date",
+        "description": "Дата создания записи"
+      },
+      "updated_at": {
+        "type": "date",
+        "description": "Дата последнего обновления"
+      }
+    }
+  }
+}

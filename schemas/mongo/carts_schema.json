@@ -1,0 +1,62 @@
+{
+  "$jsonSchema": {
+    "type": "object",
+    "required": ["_id", "items", "status", "created_at", "updated_at"],
+    "properties": {
+      "_id": {
+        "type": "objectId",
+        "description": "Уникальный идентификатор корзины"
+      },
+      "user_id": {
+        "type": ["objectId", "null"],
+        "description": "Идентификатор пользователя (если авторизован)"
+      },
+      "session_id": {
+        "type": ["string", "null"],
+        "description": "Идентификатор сессии для гостей",
+        "minLength": 1,
+        "maxLength": 64
+      },
+      "items": {
+        "type": "array",
+        "description": "Список товаров в корзине",
+        "items": {
+          "type": "object",
+          "required": ["product_id", "quantity"],
+          "properties": {
+            "product_id": {
+              "type": "objectId",
+              "description": "Идентификатор товара"
+            },
+            "quantity": {
+              "type": "int",
+              "minimum": 1,
+              "description": "Количество товара"
+            },
+            "added_at": {
+              "type": "date",
+              "description": "Дата добавления товара в корзину"
+            }
+          }
+        }
+      },
+      "status": {
+        "type": "string",
+        "description": "Статус корзины",
+        "enum": ["active", "ordered", "abandoned"]
+      },
+      "created_at": {
+        "type": "date",
+        "description": "Дата и время создания корзины"
+      },
+      "updated_at": {
+        "type": "date",
+        "description": "Дата и время последнего обновления"
+      },
+      "expires_at": {
+        "type": "date",
+        "description": "Время удаления (TTL) для автоматической очистки старых корзин"
+      }
+    }
+  }
+}
