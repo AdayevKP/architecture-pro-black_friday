@@ -1,6 +1,17 @@
 # pymongo-api
 
+## Задания 1-6
+
+[Схема приложения](schemas/planning/5-cdn.drawio)
+
+
 ## Как запустить
+
+Перейти в директорию [sharding-repl-cache](./sharding-repl-cache)
+
+```shell
+cd sharding-repl-cache
+```
 
 Запускаем mongodb и приложение
 
@@ -8,10 +19,26 @@
 docker compose up -d
 ```
 
-Заполняем mongodb данными
+Инициализация кластера mongodb c репликами
 
 ```shell
-./scripts/mongo-init.sh
+../scripts/mongo-init-replicas.sh
+```
+
+Если запуск скрипта выдает ошибку 
+```MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27020```
+то надо подождать 30 секунд и запустить снова
+
+Заполнение данных в mongodb
+
+```shell
+../scripts/mongo-init.sh
+```
+
+Показать количество записей на шардах
+
+```shell
+../scripts/mongo-shards-data.sh
 ```
 
 ## Как проверить
