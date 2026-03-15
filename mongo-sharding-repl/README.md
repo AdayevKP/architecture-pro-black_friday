@@ -2,6 +2,12 @@
 
 ## Как запустить
 
+Перейти в директорию [mongo-sharding-repl](./mongo-sharding-repl)
+
+```shell
+cd mongo-sharding-repl
+```
+
 Запускаем mongodb и приложение
 
 ```shell

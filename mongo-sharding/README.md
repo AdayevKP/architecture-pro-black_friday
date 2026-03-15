@@ -2,6 +2,12 @@
 
 ## Как запустить
 
+Перейти в директорию [mongo-sharding](./mongo-sharding)
+
+```shell
+cd mongo-sharding
+```
+
 Запускаем mongodb и приложение
 
 ```shell
