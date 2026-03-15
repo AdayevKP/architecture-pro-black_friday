@@ -21,11 +21,11 @@ docker compose up -d
 Заполнение данных в mongodb
 
 ```shell
-../scripts/mongo-init.sh
+./scripts/mongo-init.sh
 ```
 
 Показать количество записей на шардах
 
 ```shell
-../scripts/mongo-shards-data.sh
+./scripts/mongo-shards-data.sh
 ```
